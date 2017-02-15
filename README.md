@@ -4,6 +4,8 @@ An Android application that displays the weather information for the location th
 
 ## Tools
 - [Android Studio](https://developer.android.com/studio/index.html)
+- [Git](https://git-scm.com/)
+- [GitHub](https://github.com/)
 - [JUnit](http://junit.org/junit4/)
 - [SimpleUML](https://plugins.jetbrains.com/idea/plugin/4946-simpleumlce)
 - [Javadoc](http://www.oracle.com/technetwork/articles/java/index-jsp-135444.html)
