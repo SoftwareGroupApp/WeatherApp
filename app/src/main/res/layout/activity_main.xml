@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.hannahburzynski.weatherapp.MainActivity"
+    android:background="@android:color/darker_gray">
+
+    <TextView
+        android:text="100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/temperatureTextView"
+        android:textColor="#FFFFFFFF"
+        android:textSize="150sp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Austin, TX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/locationTextView"
+        android:textColor="#FFFFFFFF"
+        android:textSize="36sp"
+        android:layout_marginBottom="60dp"
+        android:layout_above="@+id/timeTextView"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/temperatureTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:text="HUMIDITY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/humidityTextView"
+                android:textColor="#FFFFFFFF"
+                android:gravity="center_horizontal"
+                android:textSize="24sp" />
+
+            <TextView
+                android:text="0.88"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/humidityValueTextView"
+                android:textColor="#FFFFFFFF"
+                android:textSize="36sp"
+                android:gravity="center_horizontal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:text="PRESSURE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/precipitationTextView"
+                android:textColor="#FFFFFFFF"
+                android:gravity="center_horizontal"
+                android:textSize="24sp" />
+
+            <TextView
+                android:text="100"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/precipitationValueTextView"
+                android:textSize="36sp"
+                android:textColor="#FFFFFFFF"
+                android:gravity="center_horizontal" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/degree"
+        android:id="@+id/degreeImageView"
+        android:layout_marginTop="48dp"
+        android:layout_alignTop="@+id/temperatureTextView"
+        android:layout_toRightOf="@+id/temperatureTextView"
+        android:layout_toEndOf="@+id/temperatureTextView" />
+
+    <TextView
+        android:text="At 5:00pm the weather is"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timeTextView"
+        android:textSize="24sp"
+        android:textColor="#FFFFFFFF"
+        android:layout_above="@+id/temperatureTextView"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
