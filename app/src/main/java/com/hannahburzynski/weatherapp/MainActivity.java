@@ -3,8 +3,8 @@ package com.hannahburzynski.weatherapp;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView humidityValueTextView;
     private TextView precipitationValueTextView;
     private TextView locationTextView;
+    private ImageView cloudImageView;
 
 
     @Override
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         humidityValueTextView = (TextView) findViewById(R.id.humidityValueTextView);
         precipitationValueTextView = (TextView) findViewById(R.id.precipitationValueTextView);
         locationTextView = (TextView) findViewById(R.id.locationTextView);
+        cloudImageView = (ImageView) findViewById(R.id.cloudImageView);
 
         String forecastURL = "http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b1b15e88fa797225412429c1c50c122a1";
 
@@ -103,6 +105,11 @@ public class MainActivity extends AppCompatActivity {
         humidityValueTextView.setText(currentWeather.getHumidity() + "%");
         precipitationValueTextView.setText(currentWeather.getPressure() + "");
         locationTextView.setText(currentWeather.getCity());
+
+        //Kyle Ratliff
+        //This code changes the cloudImageView
+        updateCloudView();
+
     }
 
     private CurrentWeather getCurrentDetails(String jsonData) throws JSONException {
@@ -122,6 +129,18 @@ public class MainActivity extends AppCompatActivity {
         currentWeather.setCity(forecast.getString("name"));
 
         return currentWeather;
+    }
+
+    //Kyle Ratliff
+    //This code changes the cloudImageView
+    private void updateCloudView (){
+        int [] images = new int [] {R.drawable.clear_day, R.drawable.partly_cloudy, R.drawable.cloudy};
+        if (currentWeather.getHumidity() < 30)
+            cloudImageView.setImageResource(images[0]);
+        else if (currentWeather.getHumidity() < 60)
+            cloudImageView.setImageResource(images[1]);
+        else
+            cloudImageView.setImageResource(images[2]);
     }
 
     private boolean isNetworkAvailable() {

@@ -106,7 +106,7 @@
         android:layout_toEndOf="@+id/temperatureTextView" />
 
     <TextView
-        android:text="At 5:00pm the weather is"
+        android:text="At the weather is"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/timeTextView"
@@ -114,5 +114,14 @@
         android:textColor="#FFFFFFFF"
         android:layout_above="@+id/temperatureTextView"
         android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/clear_day"
+        android:id="@+id/cloudImageView"
+        android:layout_alignTop="@+id/locationTextView"
+        android:layout_alignRight="@+id/degreeImageView"
+        android:layout_alignEnd="@+id/degreeImageView" />
 
 </RelativeLayout>
