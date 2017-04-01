@@ -13,14 +13,13 @@
     android:background="@android:color/darker_gray">
 
     <TextView
-        android:text="100"
+        android:id="@+id/temperatureTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/temperatureTextView"
-        android:textColor="#FFFFFFFF"
-        android:textSize="150sp"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:textColor="#FFFFFFFF"
+        android:textSize="150sp" />
 
     <TextView
         android:text="Austin, TX"
@@ -58,13 +57,12 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:text="0.88"
+                android:id="@+id/humidityValueTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/humidityValueTextView"
+                android:gravity="center_horizontal"
                 android:textColor="#FFFFFFFF"
-                android:textSize="36sp"
-                android:gravity="center_horizontal" />
+                android:textSize="36sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -83,13 +81,12 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:text="100"
+                android:id="@+id/precipitationValueTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/precipitationValueTextView"
-                android:textSize="36sp"
+                android:gravity="center_horizontal"
                 android:textColor="#FFFFFFFF"
-                android:gravity="center_horizontal" />
+                android:textSize="36sp" />
 
         </LinearLayout>
 
@@ -106,13 +103,12 @@
         android:layout_toEndOf="@+id/temperatureTextView" />
 
     <TextView
-        android:text="At 5:00pm the weather is"
+        android:id="@+id/timeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/timeTextView"
-        android:textSize="24sp"
-        android:textColor="#FFFFFFFF"
         android:layout_above="@+id/temperatureTextView"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="#FFFFFFFF"
+        android:textSize="24sp" />
 
 </RelativeLayout>
