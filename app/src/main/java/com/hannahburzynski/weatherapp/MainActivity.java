@@ -6,6 +6,10 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView humidityValueTextView;
     private TextView precipitationValueTextView;
     private TextView locationTextView;
+    private EditText searchBoxEditText;
 
 
     @Override
@@ -39,12 +44,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         // Initialize UI
         timeTextView = (TextView) findViewById(R.id.timeTextView);
         temperatureTextView = (TextView) findViewById(R.id.temperatureTextView);
         humidityValueTextView = (TextView) findViewById(R.id.humidityValueTextView);
         precipitationValueTextView = (TextView) findViewById(R.id.precipitationValueTextView);
         locationTextView = (TextView) findViewById(R.id.locationTextView);
+        searchBoxEditText = (EditText) findViewById(R.id.search_bar);
 
         // URL parameters
         final String APP_ID = "ddd38c0b3a7b986b4f6c036e8c9081bc";
@@ -146,5 +153,22 @@ public class MainActivity extends AppCompatActivity {
         AlertDialogFragment dialog = new AlertDialogFragment();
         // Show error dialog
         dialog.show(getFragmentManager(), "error_dialog");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int selectedItemId = item.getItemId();
+        if(selectedItemId == R.id.action_search){
+            Toast.makeText(this, "Search clicked", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
