@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import android.support.v7.widget.Toolbar;
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
 
         // Initialize UI
@@ -155,6 +157,11 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getFragmentManager(), "error_dialog");
     }
 
+    private boolean contains(String searchParameter){
+        //TODO implement search functionality of data structure storing cities
+        return true; // Dummy return value
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
@@ -166,7 +173,18 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int selectedItemId = item.getItemId();
         if(selectedItemId == R.id.action_search){
-            Toast.makeText(this, "Search clicked", Toast.LENGTH_LONG).show();
+            String searchParameter = searchBoxEditText.getText().toString();
+            boolean isValidParameter = contains(searchParameter);
+            if(isValidParameter == true){
+                //TODO conduct the api call
+                // Toast used as a dummy replace with api call
+                Toast.makeText(this, "Search clicked", Toast.LENGTH_LONG).show();
+            }
+            else{
+                alertUserAboutError();
+                // Clear the search box text
+                searchBoxEditText.setText("");
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
