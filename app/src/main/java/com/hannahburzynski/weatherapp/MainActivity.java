@@ -48,7 +48,10 @@ public class MainActivity extends AppCompatActivity {
         locationTextView = (TextView) findViewById(R.id.locationTextView);
         cloudImageView = (ImageView) findViewById(R.id.cloudImageView);
 
-        String forecastURL = "http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b1b15e88fa797225412429c1c50c122a1";
+        // URL parameters
+        final String APP_ID = "ddd38c0b3a7b986b4f6c036e8c9081bc";
+        String query = "London,uk";
+        String forecastURL = "http://api.openweathermap.org/data/2.5/weather?q=" + query + "&appid=" + APP_ID;
 
         // Check if network is available before making request
         if (isNetworkAvailable()) {
@@ -103,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         timeTextView.setText("At " + currentWeather.getFormattedTime() + " the weather is");
         temperatureTextView.setText(currentWeather.getTemperature() + "");
         humidityValueTextView.setText(currentWeather.getHumidity() + "%");
-        precipitationValueTextView.setText(currentWeather.getPressure() + "");
+        precipitationValueTextView.setText(currentWeather.getPressure() + "hPa");
         locationTextView.setText(currentWeather.getCity());
 
         //Kyle Ratliff
