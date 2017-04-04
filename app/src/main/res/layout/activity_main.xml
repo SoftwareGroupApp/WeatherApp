@@ -21,17 +21,6 @@
         android:textColor="#FFFFFFFF"
         android:textSize="150sp" />
 
-    <TextView
-        android:text="Austin, TX"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/locationTextView"
-        android:textColor="#FFFFFFFF"
-        android:textSize="36sp"
-        android:layout_marginBottom="60dp"
-        android:layout_above="@+id/timeTextView"
-        android:layout_centerHorizontal="true" />
-
     <LinearLayout
         android:orientation="horizontal"
         android:id="@+id/linear_layout"
@@ -110,5 +99,27 @@
         android:layout_centerHorizontal="true"
         android:textColor="#FFFFFFFF"
         android:textSize="24sp" />
+
+    <TextView
+        android:text="Austin, TX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/locationTextView"
+        android:textColor="#FFFFFFFF"
+        android:textSize="36sp"
+        android:layout_marginBottom="60dp"
+        android:layout_above="@+id/timeTextView"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/clear_day"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp"
+        android:id="@+id/cloudImageView"
+        android:layout_alignTop="@+id/locationTextView"
+        android:layout_toRightOf="@+id/locationTextView"
+        android:layout_toEndOf="@+id/locationTextView" />
 
 </RelativeLayout>
