@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         timeTextView.setText("At " + currentWeather.getFormattedTime() + " the weather is");
         temperatureTextView.setText(currentWeather.getTemperature() + "");
         humidityValueTextView.setText(currentWeather.getHumidity() + "%");
-        precipitationValueTextView.setText(currentWeather.getPressure() + "");
+        precipitationValueTextView.setText(currentWeather.getPressure() + "hPa");
         locationTextView.setText(currentWeather.getCity());
     }
 
