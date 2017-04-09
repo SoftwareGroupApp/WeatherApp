@@ -38,13 +38,14 @@ public class MainActivity extends AppCompatActivity {
     private TextView dateTextView;
     private String query;
     public static String locTimeZone;
+    public static String outlocTimeZone;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         query = getCityByLoc();
-        locTimeZone = localTimeZone();
+        locTimeZone = "America/Chicago"; //"\"" + localTimeZone() + "\"";
         onStart();
     }
 
@@ -197,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
         String timeZoneText =  TimeZone.getDefault() + "";
         int tzLeft = timeZoneText.indexOf("id=") + 4;
         int txRight = timeZoneText.indexOf(",offset") - 1;
-        return  "\" + timeZoneText.substring(tzLeft, txRight) + \"";
+        //return timeZoneText.substring(tzLeft, txRight);
+        return "America/Chicago";
     }
 }
