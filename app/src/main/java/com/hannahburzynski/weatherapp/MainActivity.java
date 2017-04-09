@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         query = getCityByLoc();
-        locTimeZone = "America/Chicago"; //"\"" + localTimeZone() + "\"";
+        locTimeZone = localTimeZone();
         onStart();
     }
 
@@ -188,8 +188,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getCityByLoc(){
-        double locLat = 30.570851;
-        double locLong = -97.653652;
+        double locLat = 50.751244; //30.570851;
+        double locLong = 37.618423; // -97.653652;
         return "lat=" + locLat + "&lon=" + locLong;
     }
 
@@ -197,8 +197,8 @@ public class MainActivity extends AppCompatActivity {
         //this gets the local time zone from the device but just ru
         String timeZoneText =  TimeZone.getDefault() + "";
         int tzLeft = timeZoneText.indexOf("id=") + 4;
-        int txRight = timeZoneText.indexOf(",offset") - 1;
-        //return timeZoneText.substring(tzLeft, txRight);
-        return "America/Chicago";
+        int txRight = timeZoneText.indexOf(",mRawOffset") - 1;
+        return timeZoneText.substring(tzLeft, txRight);
+        //return "America/Chicago";
     }
 }
