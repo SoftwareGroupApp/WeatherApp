@@ -1,12 +1,12 @@
 package com.hannahburzynski.weatherapp;
 
 import android.content.Context;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.TimeZone;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -32,11 +33,29 @@ public class MainActivity extends AppCompatActivity {
     private TextView humidityValueTextView;
     private TextView precipitationValueTextView;
     private TextView locationTextView;
+    private TextView latTextView;
+    private TextView longTextVew;
+    private TextView dateTextView;
+    private String query;
+    public static String locTimeZone;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        query = getCityByLoc();
+        locTimeZone = localTimeZone();
+        onStart();
+    }
+
+    protected void onStart() {
+        super.onStart();
+        onResume();
+    }
+
+
+    protected void onResume() {
+        super.onResume();
         setContentView(R.layout.activity_main);
 
         // Initialize UI
@@ -45,8 +64,20 @@ public class MainActivity extends AppCompatActivity {
         humidityValueTextView = (TextView) findViewById(R.id.humidityValueTextView);
         precipitationValueTextView = (TextView) findViewById(R.id.precipitationValueTextView);
         locationTextView = (TextView) findViewById(R.id.locationTextView);
+        latTextView = (TextView) findViewById(R.id.latTextVew);
+        longTextVew = (TextView) findViewById(R.id.longTextView);
+        dateTextView = (TextView) findViewById(R.id.dateTextView);
 
-        String forecastURL = "http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b1b15e88fa797225412429c1c50c122a1";
+
+        // URL parameters
+        final String APP_ID = "ddd38c0b3a7b986b4f6c036e8c9081bc";
+        //by city
+        // query = getCityByName();
+        //by location
+      //  query = getCityByLoc();
+      //  LocationManager locationManager = (LocationManager)
+      //          getSystemService(Context.LOCATION_SERVICE);
+        String forecastURL = "http://api.openweathermap.org/data/2.5/weather?" + query + "&appid=" + APP_ID;
 
         // Check if network is available before making request
         if (isNetworkAvailable()) {
@@ -98,28 +129,33 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateDisplay() {
         // Update UI elements with data from current weather object
-        timeTextView.setText("At " + currentWeather.getFormattedTime() + " the weather is");
+        timeTextView.setText(/*"At " + */"At " + currentWeather.getFormattedTime() + " the weather is");
         temperatureTextView.setText(currentWeather.getTemperature() + "");
         humidityValueTextView.setText(currentWeather.getHumidity() + "%");
         precipitationValueTextView.setText(currentWeather.getPressure() + "");
         locationTextView.setText(currentWeather.getCity());
+        latTextView.setText(currentWeather.getLat() + "");
+        longTextVew.setText(currentWeather.getLon() + "");
+        dateTextView.setText(currentWeather.getFormattedDate());
     }
 
     private CurrentWeather getCurrentDetails(String jsonData) throws JSONException {
 
         CurrentWeather currentWeather = new CurrentWeather();
         // Exception is handled for whoever calls this method
-
         // Parse json data and assign to current weather object
         // Currently is a json object embedded in the original json object
         JSONObject forecast = new JSONObject(jsonData);
         JSONObject main = forecast.getJSONObject("main");
-
+        JSONObject coord = forecast.getJSONObject("coord");
         currentWeather.setHumidity(main.getDouble("humidity"));
         currentWeather.setTime(forecast.getLong("dt"));
         currentWeather.setPressure(main.getLong("pressure"));
         currentWeather.setTemperature((main.getDouble("temp")*9/5 - 459.67));
         currentWeather.setCity(forecast.getString("name"));
+        currentWeather.setLat(coord.getDouble("lat"));
+        currentWeather.setLon(coord.getDouble("lon"));
+
 
         return currentWeather;
     }
@@ -143,5 +179,24 @@ public class MainActivity extends AppCompatActivity {
         AlertDialogFragment dialog = new AlertDialogFragment();
         // Show error dialog
         dialog.show(getFragmentManager(), "error_dialog");
+    }
+
+    private String getCityByName(){
+        String cityName =  "St. John's, CA";
+        return "q=" + cityName;
+    }
+
+    private String getCityByLoc(){
+        double locLat = 30.570851;
+        double locLong = -97.653652;
+        return "lat=" + locLat + "&lon=" + locLong;
+    }
+
+    private String localTimeZone(){
+        //this gets the local time zone from the device but just ru
+        String timeZoneText =  TimeZone.getDefault() + "";
+        int tzLeft = timeZoneText.indexOf("id=") + 4;
+        int txRight = timeZoneText.indexOf(",offset") - 1;
+        return  "\" + timeZoneText.substring(tzLeft, txRight) + \"";
     }
 }
