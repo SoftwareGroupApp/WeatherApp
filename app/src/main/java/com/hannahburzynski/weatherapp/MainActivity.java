@@ -9,8 +9,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +57,10 @@ public class MainActivity extends AppCompatActivity {
         humidityValueTextView = (TextView) findViewById(R.id.humidityValueTextView);
         precipitationValueTextView = (TextView) findViewById(R.id.precipitationValueTextView);
         locationTextView = (TextView) findViewById(R.id.locationTextView);
-        searchBoxEditText = (EditText) findViewById(R.id.search_bar);
+        Spinner spinner = (Spinner) findViewById(R.id.city_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.city_array,android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new OnCitySelectedListener());
 
         // URL parameters
         final String APP_ID = "ddd38c0b3a7b986b4f6c036e8c9081bc";
@@ -157,10 +164,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getFragmentManager(), "error_dialog");
     }
 
-    private boolean contains(String searchParameter){
-        //TODO implement search functionality of data structure storing cities
-        return true; // Dummy return value
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -173,20 +177,21 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int selectedItemId = item.getItemId();
         if(selectedItemId == R.id.action_search){
-            String searchParameter = searchBoxEditText.getText().toString();
-            boolean isValidParameter = contains(searchParameter);
-            if(isValidParameter == true){
-                //TODO conduct the api call
-                // Toast used as a dummy replace with api call
                 Toast.makeText(this, "Search clicked", Toast.LENGTH_LONG).show();
+                return true;
             }
-            else{
-                alertUserAboutError();
-                // Clear the search box text
-                searchBoxEditText.setText("");
-            }
-            return true;
+           return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+
+
+    class OnCitySelectedListener implements AdapterView.OnItemSelectedListener {
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id){
+            Toast.makeText(parent.getContext(), parent.getItemAtPosition(pos).toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+            // DO nothing
+        }
     }
 }
