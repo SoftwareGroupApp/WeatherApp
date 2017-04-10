@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView dateTextView;
     private String query;
     public static String locTimeZone;
+    public static String outlocTimeZone;
 
 
     @Override
@@ -187,8 +188,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getCityByLoc(){
-        double locLat = -33.865;//30.570851;
-        double locLong = 151.209;//-97.653652;
+        double locLat =  30.570851; //50.751244; //
+        double locLong = -97.653652; //37.618423; //
         return "lat=" + locLat + "&lon=" + locLong;
     }
 
@@ -198,5 +199,6 @@ public class MainActivity extends AppCompatActivity {
         int tzLeft = timeZoneText.indexOf("id=") + 4;
         int txRight = timeZoneText.indexOf(",mRawOffset") - 1;
         return timeZoneText.substring(tzLeft, txRight);
+        //return "America/Chicago";
     }
 }
