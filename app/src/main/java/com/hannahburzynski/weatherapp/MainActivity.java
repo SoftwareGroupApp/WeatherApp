@@ -1,18 +1,26 @@
 package com.hannahburzynski.weatherapp;
 
 import android.content.Context;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import android.support.v7.widget.Toolbar;
 import java.io.IOException;
 import java.util.TimeZone;
 
@@ -39,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private String query;
     public static String locTimeZone;
     public static String outlocTimeZone;
+    private EditText searchBoxEditText;
 
 
     @Override
@@ -58,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setContentView(R.layout.activity_main);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
 
         // Initialize UI
         timeTextView = (TextView) findViewById(R.id.timeTextView);
@@ -68,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
         latTextView = (TextView) findViewById(R.id.latTextVew);
         longTextVew = (TextView) findViewById(R.id.longTextView);
         dateTextView = (TextView) findViewById(R.id.dateTextView);
+        Spinner spinner = (Spinner) findViewById(R.id.city_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.city_array,android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new OnCitySelectedListener());
 
 
         // URL parameters
@@ -200,5 +216,36 @@ public class MainActivity extends AppCompatActivity {
         int txRight = timeZoneText.indexOf(",mRawOffset") - 1;
         return timeZoneText.substring(tzLeft, txRight);
         //return "America/Chicago";
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int selectedItemId = item.getItemId();
+        if(selectedItemId == R.id.action_search){
+                Toast.makeText(this, "Search clicked", Toast.LENGTH_LONG).show();
+                return true;
+            }
+           return super.onOptionsItemSelected(item);
+        }
+
+
+    class OnCitySelectedListener implements AdapterView.OnItemSelectedListener {
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id){
+            Toast.makeText(parent.getContext(), parent.getItemAtPosition(pos).toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+            // DO nothing
+        }
     }
 }
