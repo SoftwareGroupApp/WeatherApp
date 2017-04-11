@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView dateTextView;
     private String query;
     public static String locTimeZone;
-    public static String outlocTimeZone;
-    private EditText searchBoxEditText;
+    //private EditText searchBoxEditText;
+   // private static String city2Get;
 
 
     @Override
@@ -198,10 +198,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getFragmentManager(), "error_dialog");
     }
 
-    private String getCityByName(){
-        String cityName =  "St. John's, CA";
-        return "q=" + cityName;
-    }
+
 
     private String getCityByLoc(){
         double locLat =  30.570851; //50.751244; //
@@ -215,10 +212,7 @@ public class MainActivity extends AppCompatActivity {
         int tzLeft = timeZoneText.indexOf("id=") + 4;
         int txRight = timeZoneText.indexOf(",mRawOffset") - 1;
         return timeZoneText.substring(tzLeft, txRight);
-        //return "America/Chicago";
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -240,7 +234,13 @@ public class MainActivity extends AppCompatActivity {
 
     class OnCitySelectedListener implements AdapterView.OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id){
+            String city2Get = parent.getSelectedItem() + "";
             Toast.makeText(parent.getContext(), parent.getItemAtPosition(pos).toString(), Toast.LENGTH_SHORT).show();
+        getCityByName(city2Get);
+        }
+        private String getCityByName(String city2Get){
+            String cityName =  city2Get;
+            return "q=" + cityName;
         }
 
         @Override
