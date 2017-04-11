@@ -19,7 +19,11 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:layout_above="@+id/locationTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="15dp">
         <Spinner
             android:id="@+id/city_spinner"
             android:layout_width="match_parent"
@@ -31,21 +35,24 @@
         android:id="@+id/temperatureTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:gravity="center_horizontal"
+        android:text="@string/Temperature"
         android:textColor="#FFFFFFFF"
-        android:textSize="150sp" />
+        android:textSize="150sp"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/locationTextView"
+        android:layout_alignEnd="@+id/locationTextView" />
 
     <TextView
-        android:text="Austin, TX"
+        android:id="@+id/locationTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/locationTextView"
-        android:textColor="#FFFFFFFF"
-        android:textSize="36sp"
-        android:layout_marginBottom="60dp"
         android:layout_above="@+id/timeTextView"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:text="@string/CityName"
+        android:textColor="#FFFFFFFF"
+        android:textSize="36sp" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -54,7 +61,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/temperatureTextView"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:orientation="vertical"
@@ -63,7 +71,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:text="HUMIDITY"
+                android:text="@string/humidity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/humidityTextView"
@@ -76,6 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
+                android:text="@string/Humidity"
                 android:textColor="#FFFFFFFF"
                 android:textSize="36sp" />
         </LinearLayout>
@@ -87,7 +96,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:text="PRESSURE"
+                android:text="@string/pressure"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/precipitationTextView"
@@ -96,34 +105,92 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/precipitationValueTextView"
+                android:text="@string/Pressure"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
+                android:id="@+id/precipitationValueTextView"
+                android:textSize="36sp"
                 android:textColor="#FFFFFFFF"
-                android:textSize="36sp" />
+                android:gravity="center_horizontal" />
 
         </LinearLayout>
 
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/degreeImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/degree"
-        android:id="@+id/degreeImageView"
-        android:layout_marginTop="48dp"
         android:layout_alignTop="@+id/temperatureTextView"
+        android:layout_marginTop="48dp"
+        android:layout_toEndOf="@+id/temperatureTextView"
         android:layout_toRightOf="@+id/temperatureTextView"
-        android:layout_toEndOf="@+id/temperatureTextView" />
+        android:contentDescription="@string/degree_symbol"
+        app:srcCompat="@drawable/degree" />
 
     <TextView
-        android:id="@+id/timeTextView"
+        android:text="@string/TimeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/temperatureTextView"
-        android:layout_centerHorizontal="true"
+        android:id="@+id/timeTextView"
+        android:textSize="24sp"
         android:textColor="#FFFFFFFF"
-        android:textSize="24sp" />
+        android:layout_above="@+id/temperatureTextView"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/latLongTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="31dp"
+        android:text="@string/lat_long"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:layout_below="@+id/linear_layout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/latTextVew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:text="@string/Latitude"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:layout_alignBaseline="@+id/latLongTextView"
+        android:layout_alignBottom="@+id/latLongTextView"
+        android:layout_toRightOf="@+id/latLongTextView"
+        android:layout_toEndOf="@+id/latLongTextView" />
+
+    <TextView
+        android:id="@+id/longTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/latTextVew"
+        android:layout_alignBottom="@+id/latTextVew"
+        android:layout_alignEnd="@+id/degreeImageView"
+        android:layout_alignRight="@+id/degreeImageView"
+        android:text="@string/longitude"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/dateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/timeTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="17dp"
+        android:gravity="center_horizontal"
+        android:text="@string/DateText"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
 
 </RelativeLayout>
