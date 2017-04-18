@@ -46,7 +46,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView dateTextView;
     private String query;
     public static String locTimeZone;
-
+    public double[] timeOffSets = {-2,5,-3,-7,-8,-1,-2,5,5,6,10,-8,-2,9,-4,-5.75,-2,0,0,2,-1,-10,
+            -3,-5.5,3.5,4,-1,-8,5,-1,5,-9,-8,-8,-3,-10,-8,-3.5 };
+    public double timeOffSetSelected;
 /////////////////////////////// o n C r e a t e ////////////////////////////////////////////
 
     @Override
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         query = getCityByLoc();
         locTimeZone = localTimeZone();
+        timeOffSetSelected = 0;
         onStart();
     }
 
@@ -97,7 +100,10 @@ public class MainActivity extends AppCompatActivity {
     class OnCitySelectedListener implements AdapterView.OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id){
             String city2Get = "q=" + parent.getSelectedItem();
-            Toast.makeText(parent.getContext(), parent.getItemAtPosition(pos).toString(), Toast.LENGTH_SHORT).show();
+            int cityIndex = parent.getSelectedItemPosition();
+            timeOffSetSelected = timeOffSets[cityIndex];
+            Toast.makeText(parent.getContext(), parent.getItemAtPosition(pos).toString(),
+                    Toast.LENGTH_SHORT).show();
         getWeather(city2Get);
         }
 
@@ -134,17 +140,19 @@ public class MainActivity extends AppCompatActivity {
         longTextVew = (TextView) findViewById(R.id.longTextView);
         dateTextView = (TextView) findViewById(R.id.dateTextView);
         Spinner spinner = (Spinner) findViewById(R.id.city_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.city_array,android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.city_array,android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new OnCitySelectedListener());
     }
 
     private void updateDisplay() {
         // Update UI elements with data from current weather object
-        timeTextView.setText(/*"At " + */"At " + currentWeather.getFormattedTime() + " the weather is");
+        timeTextView.setText(/*"At " + */"At " + currentWeather.getFormattedTime()
+                + " the weather is");
         temperatureTextView.setText(currentWeather.getTemperature() + "");
         humidityValueTextView.setText(currentWeather.getHumidity() + "%");
-        precipitationValueTextView.setText(currentWeather.getPressure() + "");
+        precipitationValueTextView.setText(String.format("%.2f", currentWeather.getPressure()));
         locationTextView.setText(currentWeather.getCity());
         latTextView.setText(currentWeather.getLat() + "");
         longTextVew.setText(currentWeather.getLon() + "");
@@ -153,7 +161,8 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isNetworkAvailable() {
         boolean isAvailable = false;
-        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager manager = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
         // Determine if network info is present and active, need permission to access network state
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
         // Check if network is present and connected
