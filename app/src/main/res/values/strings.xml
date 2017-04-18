@@ -1,0 +1,103 @@
+<resources>
+    <string name="app_name">Stormy</string>
+    <string name="error_title">Error</string>
+    <string name="error_message">There was an error. Please try again.</string>
+    <string name="error_positive_button_text">OK</string>
+    <string name="network_unavailable_message">Network is unavailable</string>
+    <string name="search">Search</string>
+    <string name="longitude">-97.654887</string>
+    <string name="Latitude">30.568948</string>
+    <string name="Humidity">0.88</string>
+    <string name="humidity">HUMIDITY</string>
+    <string name="Pressure">100</string>
+    <string name="pressure">PRESSURE</string>
+    <string name="lat_long">Lat/Long</string>
+    <string name="Temperature">100</string>
+    <string name="TimeText">At 5:00pm the weather is</string>
+    <string name="DateText">Wed, 12 April, 2017</string>
+    <string name="CityName">Round Rock, TX</string>
+    <string name="degree_symbol">degree symbol</string>
+    <string-array name="city_array">
+        <item> </item>
+        <item>Athens GR</item>
+        <item>Austin US</item>
+        <item>Baghdad IQ</item>
+        <item>Bangkok TH</item>
+        <item>Beijing CN</item>
+        <item>Berlin DE</item>
+        <item>Cairo EG</item>
+        <item>Cedar Park US</item>
+        <item>Chicago US</item>
+        <item>Denver US</item>
+        <item>Honolulu US</item>
+        <item>Hong Kong HK</item>
+        <item>Jerusalem IL</item>
+        <item>Juneau US</item>
+        <item>Kabul AF</item>
+        <item>Kathmandu NP</item>
+        <item>Kiev UA</item>
+        <item>Lisbon PT</item>
+        <item>London GB</item>
+        <item>Los Angeles US</item>
+        <item>Madrid ES</item>
+        <item>Melbourne AU</item>
+        <item>Moscow RU</item>
+        <item>Mumbai IN</item>
+        <item>St. Johns CA</item>
+        <item>Ottawa CA</item>
+        <item>Paris FR</item>
+        <item>Perth AU</item>
+        <item>Pflugerville US</item>
+        <item>Roma IT</item>
+        <item>Round Rock US</item>
+        <item>Seoul KR</item>
+        <item>Shanghai CN</item>
+        <item>Singapore SG</item>
+        <item>Saint Petersburg RU</item>
+        <item>Sydney AU</item>
+        <item>Taipei TW</item>
+        <item>Tehran IR</item>
+    </string-array>
+
+    <string-array name="timeZone_array">
+        <item> </item>
+        <item>-2</item>
+        <item>5</item>
+        <item>-3</item>
+        <item>-7</item>
+        <item>-8</item>
+        <item>-1</item>
+        <item>-2</item>
+        <item>5</item>
+        <item>5</item>
+        <item>6</item>
+        <item>10</item>
+        <item>-8</item>
+        <item>-2</item>
+        <item>9</item>
+        <item>-4</item>
+        <item>-5.75</item>
+        <item>-2</item>
+        <item>0</item>
+        <item>0</item>
+        <item>2</item>
+        <item>-1</item>
+        <item>-10</item>
+        <item>-3</item>
+        <item>-5.5</item>
+        <item>3.5</item>
+        <item>4</item>
+        <item>-1</item>
+        <item>-8</item>
+        <item>5</item>
+        <item>-1</item>
+        <item>5</item>
+        <item>-9</item>
+        <item>-8</item>
+        <item>-8</item>
+        <item>-3</item>
+        <item>-10</item>
+        <item>-8</item>
+        <item>-3.5</item>
+    </string-array>
+</resources>
