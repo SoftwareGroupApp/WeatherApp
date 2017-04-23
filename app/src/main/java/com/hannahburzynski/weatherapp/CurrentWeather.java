@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 /**
- * Created by hannahburzynski on 2/6/17.
+ * This class is responsible for encapsulating the contents of weather data
  */
 
 public class CurrentWeather {
@@ -64,7 +64,10 @@ public class CurrentWeather {
 
     public void setLon(double lon) { this.lon = lon; }
 
-    // Get the formatted time from a UNIX time string value
+    /**
+     * get formatted time
+     * @return String that contains the time for the city
+     */
     public String getFormattedTime() {
         SimpleDateFormat formatter = new SimpleDateFormat("h:mm a");
         formatter.setTimeZone(TimeZone.getTimeZone(MainActivity.locTimeZone));
@@ -74,6 +77,10 @@ public class CurrentWeather {
         return timeString;
     }
 
+    /**
+     * returns the formatted time according
+     * @return a String of the time
+     */
     public String getFormattedDate(){
         SimpleDateFormat formatDate = new SimpleDateFormat("EEE, MMM d, yyyy");
         formatDate.setTimeZone(TimeZone.getTimeZone((MainActivity.locTimeZone)));

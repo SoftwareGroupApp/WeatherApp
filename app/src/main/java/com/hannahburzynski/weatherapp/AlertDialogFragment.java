@@ -7,11 +7,17 @@ import android.content.Context;
 import android.os.Bundle;
 
 /**
- * Created by hannahburzynski on 2/5/17.
+ * Class inherits from DialogFragment and is responsible for alerting
+ * the user of a application error.
  */
 
 public class AlertDialogFragment extends DialogFragment {
 
+    /**
+     * creates a dialog box to inform an error state
+     * @param savedInstanceState the bundle from the saved state
+     * @return a dialog, the error message
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Context context = getActivity();

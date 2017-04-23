@@ -56,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Calls the super constructor onCreate() and loads current city and
-     * time details.
+     * time details. See onCreate() for more details related to Android
+     * @see <a href="https://developer.android.com/reference/android/app/Activity.html#onCreate(android.os.Bundle)">https://developer.android.com/reference/android/app/Activity.html#onCreate(android.os.Bundle)</a>
      *@param savedInstanceState loads the previous instance state
      */
     @Override
@@ -68,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     *Initializes the contents of the menu.
+     *  @see <a href="https://developer.android.com/reference/android/app/Activity.html#onCreateOptionsMenu(android.view.Menu)">https://developer.android.com/reference/android/app/Activity.html#onCreateOptionsMenu(android.view.Menu)</a>
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -79,13 +81,20 @@ public class MainActivity extends AppCompatActivity {
 
 /////////////////////////////// o n S t a r t //////////////////////////////////////////////
 
+    /**
+     * Resumes the application.
+     * @see <a href="https://developer.android.com/reference/android/app/Activity.html#onStart()">https://developer.android.com/reference/android/app/Activity.html#onStart()</a>
+     */
     protected void onStart() {
         super.onStart();
         onResume();
     }
 
 /////////////////////////////// o n R e s u m e ////////////////////////////////////////////
-
+    /**
+     * When resumed, the UI contents are reset and the current weather status is queried.
+     * @see <a href="https://developer.android.com/reference/android/app/Activity.html#onResume()">https://developer.android.com/reference/android/app/Activity.html#onResume()</a>
+     */
     protected void onResume() {
         super.onResume();
         setContentView(R.layout.activity_main);
@@ -95,6 +104,12 @@ public class MainActivity extends AppCompatActivity {
         getWeather(query);
     }
 
+    /**
+     * Shows the user which items were selected on from the menu.
+     * @see <a href="https://developer.android.com/reference/android/app/Activity.html#onOptionsItemSelected(android.view.MenuItem)">https://developer.android.com/reference/android/app/Activity.html#onOptionsItemSelected(android.view.MenuItem)</a>
+     * @param item
+     * @return whether the item was selected
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int selectedItemId = item.getItemId();
@@ -107,6 +122,10 @@ public class MainActivity extends AppCompatActivity {
 
 /////////////////////////////// L i s t e n e r ////////////////////////////////////////////
 
+    /**
+     * This class is responsible for listening to user events to choosing which city to query.
+     * @see <a href="https://developer.android.com/reference/android/widget/AdapterView.OnItemSelectedListener.html">https://developer.android.com/reference/android/widget/AdapterView.OnItemSelectedListener.html</a>
+     */
     class OnCitySelectedListener implements AdapterView.OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             String city2Get = "q=" + parent.getSelectedItem();
@@ -124,12 +143,20 @@ public class MainActivity extends AppCompatActivity {
 
 /////////////////////////////// M E T H O D S /////////////////////////////////////////////
 
+    /**
+     * Get the a cities location via latitude and longitude
+     * @return String that has the lat and long of a city
+     */
     private String getCityByLoc(){
         double locLat =  30.570851; //50.751244; //
         double locLong = -97.653652; //37.618423; //
         return "lat=" + locLat + "&lon=" + locLong;
     }
 
+    /**
+     * Gets the local Time Zone
+     * @return a String that describes the time zone of the city
+     */
     private String localTimeZone(){
         //this gets the local time zone from the device but just ru
         String timeZoneText =  TimeZone.getDefault() + "";
@@ -138,6 +165,9 @@ public class MainActivity extends AppCompatActivity {
         return timeZoneText.substring(tzLeft, txRight);
     }
 
+    /**
+     * Initializes the UI from the components from the main_activity.xml
+     */
     protected void intializeUI(){
         // Initialize UI
         timeTextView = (TextView) findViewById(R.id.timeTextView);
@@ -170,6 +200,9 @@ public class MainActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new OnCitySelectedListener());
     }
 
+    /**
+     * Updates the display according to the new Current Weather attributes.
+     */
     private void updateDisplay() {
         // Update UI elements with data from current weather object
         timeTextView.setText(/*"At " + */"At " + currentWeather.getFormattedTime() + " the weather is");
@@ -182,6 +215,10 @@ public class MainActivity extends AppCompatActivity {
         dateTextView.setText(currentWeather.getFormattedDate());
     }
 
+    /**
+     * Checks to see the status of the network
+     * @return the state of the network, either it is on, or not
+     */
     private boolean isNetworkAvailable() {
         boolean isAvailable = false;
         ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -194,6 +231,10 @@ public class MainActivity extends AppCompatActivity {
         return isAvailable;
     }
 
+    /**
+     * Gets the current weather update from
+     * @param query this query is part of the request the client requests from the server
+     */
     protected void getWeather(String query){
         final String APP_ID = "ddd38c0b3a7b986b4f6c036e8c9081bc";
         String forecastURL = "http://api.openweathermap.org/data/2.5/weather?" +
@@ -246,12 +287,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Displays an error message.
+     */
     private void alertUserAboutError() {
         AlertDialogFragment dialog = new AlertDialogFragment();
         // Show error dialog
         dialog.show(getFragmentManager(), "error_dialog");
     }
 
+    /**
+     * parses a string to get attributes
+     * @param jsonData String that contains JSON query to parse attributes
+     * @return an object CurrentWeather with the contents and attributes
+     * @throws JSONException
+     */
     private CurrentWeather getCurrentDetails(String jsonData) throws JSONException {
 
         CurrentWeather currentWeather = new CurrentWeather();
