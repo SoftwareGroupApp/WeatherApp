@@ -22,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.support.v7.widget.Toolbar;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.TimeZone;
 
 import okhttp3.Call;
@@ -34,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
     private CurrentWeather currentWeather;
-
     // UI
     private TextView timeTextView;
     private TextView temperatureTextView;
@@ -49,15 +49,21 @@ public class MainActivity extends AppCompatActivity {
     public double[] timeOffSets = {-2,5,-3,-7,-8,-1,-2,5,5,6,10,-8,-2,9,-4,-5.75,-2,0,0,2,-1,-10,
             -3,-5.5,3.5,4,-1,-8,5,-1,5,-9,-8,-8,-3,-10,-8,-3.5 };
     public double timeOffSetSelected;
+
 /////////////////////////////// o n C r e a t e ////////////////////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        intializeUI();
         query = getCityByLoc();
         locTimeZone = localTimeZone();
         timeOffSetSelected = 0;
-        onStart();
+        getWeather(query);
+    //    onStart();
     }
 
     @Override
@@ -69,22 +75,22 @@ public class MainActivity extends AppCompatActivity {
 
 /////////////////////////////// o n S t a r t //////////////////////////////////////////////
 
-    protected void onStart() {
+   /* protected void onStart() {
         super.onStart();
-        onResume();
+    //    onResume();
     }
-
+*/
 /////////////////////////////// o n R e s u m e ////////////////////////////////////////////
 
-    protected void onResume() {
+   /* protected void onResume() {
         super.onResume();
-        setContentView(R.layout.activity_main);
+    //    setContentView(R.layout.activity_main);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         intializeUI();
         getWeather(query);
     }
-
+*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int selectedItemId = item.getItemId();
@@ -99,12 +105,15 @@ public class MainActivity extends AppCompatActivity {
 
     class OnCitySelectedListener implements AdapterView.OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id){
-            String city2Get = "q=" + parent.getSelectedItem();
-            int cityIndex = parent.getSelectedItemPosition();
-            timeOffSetSelected = timeOffSets[cityIndex];
-            Toast.makeText(parent.getContext(), parent.getItemAtPosition(pos).toString(),
-                    Toast.LENGTH_SHORT).show();
-        getWeather(city2Get);
+            int itemPos = parent.getSelectedItemPosition();
+            if(itemPos != 0) {
+                String city2Get = "q=" + parent.getSelectedItem();
+                int cityIndex = parent.getSelectedItemPosition();
+                timeOffSetSelected = timeOffSets[cityIndex];
+                Toast.makeText(parent.getContext(), parent.getItemAtPosition(pos).toString(),
+                        Toast.LENGTH_SHORT).show();
+                getWeather(city2Get);
+            }
         }
 
         @Override
@@ -140,8 +149,23 @@ public class MainActivity extends AppCompatActivity {
         longTextVew = (TextView) findViewById(R.id.longTextView);
         dateTextView = (TextView) findViewById(R.id.dateTextView);
         Spinner spinner = (Spinner) findViewById(R.id.city_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.city_array,android.R.layout.simple_spinner_dropdown_item);
+        try{
+            Field popup = Spinner.class.getDeclaredField("mPopup");
+            popup.setAccessible(true);
+
+            // Get private mPopup member variable and try cast to ListPopupWindow
+            android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(spinner);
+
+            // Set popupWindow height to 500px
+            popupWindow.setHeight(800);
+        }catch(java.lang.NoSuchFieldException e){
+            e.printStackTrace();
+        }
+        catch(java.lang.IllegalAccessException e){
+            e.printStackTrace();
+        }
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.city_array,android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new OnCitySelectedListener());
     }
@@ -241,8 +265,8 @@ public class MainActivity extends AppCompatActivity {
         JSONObject coord = forecast.getJSONObject("coord");
         currentWeather.setHumidity(main.getDouble("humidity"));
         currentWeather.setTime(forecast.getLong("dt"));
-        currentWeather.setPressure(main.getLong("pressure"));
-        currentWeather.setTemperature((main.getDouble("temp")*9/5 - 459.67));
+        currentWeather.setPressure(main.getLong("pressure") *  0.0295299830714);
+        currentWeather.setTemperature((main.getDouble("temp") * 9/5 - 459.67));
         currentWeather.setCity(forecast.getString("name"));
         currentWeather.setLat(coord.getDouble("lat"));
         currentWeather.setLon(coord.getDouble("lon"));

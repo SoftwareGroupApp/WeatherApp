@@ -5,11 +5,11 @@
     <string name="error_positive_button_text">OK</string>
     <string name="network_unavailable_message">Network is unavailable</string>
     <string name="search">Search</string>
-    <string name="longitude">-97.654887</string>
-    <string name="Latitude">30.568948</string>
+    <string name="longitude">-97.65</string>
+    <string name="Latitude">30.56</string>
     <string name="Humidity">0.88</string>
     <string name="humidity">HUMIDITY</string>
-    <string name="Pressure">100</string>
+    <string name="Pressure">30.00</string>
     <string name="pressure">PRESSURE</string>
     <string name="lat_long">Lat/Long</string>
     <string name="Temperature">100</string>
@@ -18,7 +18,7 @@
     <string name="CityName">Round Rock, TX</string>
     <string name="degree_symbol">degree symbol</string>
     <string-array name="city_array">
-        <item> </item>
+        <item>Select City:</item>
         <item>Athens GR</item>
         <item>Austin US</item>
         <item>Baghdad IQ</item>
@@ -59,45 +59,4 @@
         <item>Tehran IR</item>
     </string-array>
 
-    <string-array name="timeZone_array">
-        <item> </item>
-        <item>-2</item>
-        <item>5</item>
-        <item>-3</item>
-        <item>-7</item>
-        <item>-8</item>
-        <item>-1</item>
-        <item>-2</item>
-        <item>5</item>
-        <item>5</item>
-        <item>6</item>
-        <item>10</item>
-        <item>-8</item>
-        <item>-2</item>
-        <item>9</item>
-        <item>-4</item>
-        <item>-5.75</item>
-        <item>-2</item>
-        <item>0</item>
-        <item>0</item>
-        <item>2</item>
-        <item>-1</item>
-        <item>-10</item>
-        <item>-3</item>
-        <item>-5.5</item>
-        <item>3.5</item>
-        <item>4</item>
-        <item>-1</item>
-        <item>-8</item>
-        <item>5</item>
-        <item>-1</item>
-        <item>5</item>
-        <item>-9</item>
-        <item>-8</item>
-        <item>-8</item>
-        <item>-3</item>
-        <item>-10</item>
-        <item>-8</item>
-        <item>-3.5</item>
-    </string-array>
 </resources>
