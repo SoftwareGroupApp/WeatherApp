@@ -3,8 +3,9 @@ package com.hannahburzynski.weatherapp;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,15 +13,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import android.support.v7.widget.Toolbar;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.TimeZone;
@@ -31,6 +30,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ *This class contains the behavior, attributes, and UI elements associated with
+ * the Main Activity of the application.
+ *
+ */
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -50,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
 
 /////////////////////////////// o n C r e a t e ////////////////////////////////////////////
 
+    /**
+     * Calls the super constructor onCreate() and loads current city and
+     * time details.
+     *@param savedInstanceState loads the previous instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
         onStart();
     }
 
+    /**
+     *
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
