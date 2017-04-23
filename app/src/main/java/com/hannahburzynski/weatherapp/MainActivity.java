@@ -96,10 +96,12 @@ public class MainActivity extends AppCompatActivity {
 /////////////////////////////// L i s t e n e r ////////////////////////////////////////////
 
     class OnCitySelectedListener implements AdapterView.OnItemSelectedListener {
-        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id){
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             String city2Get = "q=" + parent.getSelectedItem();
-            Toast.makeText(parent.getContext(), parent.getItemAtPosition(pos).toString(), Toast.LENGTH_SHORT).show();
-        getWeather(city2Get);
+            if (pos != 0) {
+                Toast.makeText(parent.getContext(), parent.getItemAtPosition(pos).toString(), Toast.LENGTH_SHORT).show();
+                getWeather(city2Get);
+            }
         }
 
         @Override
