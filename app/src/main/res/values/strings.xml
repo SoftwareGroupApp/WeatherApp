@@ -15,7 +15,7 @@
     <string name="Temperature">100</string>
     <string name="TimeText">At 5:00pm the weather is</string>
     <string name="DateText">Wed, 12 April, 2017</string>
-    <string name="CityName">Round Rock, TX</string>
+    <string name="CityName">Round Rock, Texas USA </string>
     <string name="degree_symbol">degree symbol</string>
     <string-array name="city_array">
         <item>Select City:</item>
