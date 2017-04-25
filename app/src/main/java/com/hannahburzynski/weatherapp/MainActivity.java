@@ -1,10 +1,13 @@
 package com.hannahburzynski.weatherapp;
 
 import android.content.Context;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,15 +15,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-import android.support.v7.widget.Toolbar;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.TimeZone;
@@ -31,9 +36,16 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity {
+
+
+
+public class MainActivity extends AppCompatActivity implements
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener
+{
 
     public static final String TAG = MainActivity.class.getSimpleName();
+    private GoogleApiClient mGoogleApiClient;
     private CurrentWeather currentWeather;
     // UI
     private TextView timeTextView;
@@ -49,20 +61,26 @@ public class MainActivity extends AppCompatActivity {
     public double[] timeOffSets = {-2,5,-3,-7,-8,-1,-2,5,5,6,10,-8,-2,9,-4,-5.75,-2,0,0,2,-1,-10,
             -3,-5.5,3.5,4,-1,-8,5,-1,5,-9,-8,-8,-3,-10,-8,-3.5 };
     public double timeOffSetSelected;
+    protected Location mLastLocation;
+    public double locLat = 0;
+    public double locLong = 0;
+    protected GoogleApiClient getmGoogleApiClient;
+
 
 /////////////////////////////// o n C r e a t e ////////////////////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
         setContentView(R.layout.activity_main);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         intializeUI();
-        query = getCityByLoc();
-        locTimeZone = localTimeZone();
-        timeOffSetSelected = 0;
-        getWeather(query);
     //    onStart();
     }
 
@@ -73,13 +91,22 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-/////////////////////////////// o n S t a r t //////////////////////////////////////////////
 
-   /* protected void onStart() {
+/////////////////////////////// o n S t a r t //////////////////////////////////////////////
+@Override
+   protected void onStart() {
         super.onStart();
+        mGoogleApiClient.connect();
     //    onResume();
     }
-*/
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
 /////////////////////////////// o n R e s u m e ////////////////////////////////////////////
 
    /* protected void onResume() {
@@ -101,6 +128,53 @@ public class MainActivity extends AppCompatActivity {
            return super.onOptionsItemSelected(item);
         }
 
+    @Override
+    public void onConnected(Bundle bundle) {
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if(mLastLocation != null){
+            locLat = mLastLocation.getLatitude();
+            locLong = mLastLocation.getLongitude();
+        }
+        else {
+            Toast.makeText(this, "No Location", Toast.LENGTH_LONG).show();
+        }
+        query = getCityByLoc();
+        locTimeZone = localTimeZone();
+        timeOffSetSelected = 0;
+        getWeather(query);
+       // LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
+        //Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+/*
+        LocationRequest mLocationRequest = new LocationRequest();
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(mLocationRequest);
+        Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (lastLocation != null) {
+        }*/
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult){
+
+        Toast.makeText(this, "Connect Failed", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+
+
 /////////////////////////////// L i s t e n e r ////////////////////////////////////////////
 
     class OnCitySelectedListener implements AdapterView.OnItemSelectedListener {
@@ -120,13 +194,18 @@ public class MainActivity extends AppCompatActivity {
         public void onNothingSelected(AdapterView<?> parent) {
             // DO nothing
         }
+
+
     }
 
 /////////////////////////////// M E T H O D S /////////////////////////////////////////////
 
     private String getCityByLoc(){
-        double locLat =  30.570851; //50.751244; //
-        double locLong = -97.653652; //37.618423; //
+        if (locLat == 0)
+        {
+            locLat =  30.570851; //50.751244; //
+            locLong = -97.653652; //37.618423; //
+        }
         return "lat=" + locLat + "&lon=" + locLong;
     }
 
