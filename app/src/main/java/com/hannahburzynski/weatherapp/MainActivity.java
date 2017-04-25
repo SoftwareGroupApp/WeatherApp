@@ -122,10 +122,9 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int selectedItemId = item.getItemId();
         if(selectedItemId == R.id.action_search){
-                Toast.makeText(this, "Search clicked", Toast.LENGTH_LONG).show();
                 return true;
             }
-           return super.onOptionsItemSelected(item);
+           return false;
         }
 
     @Override
