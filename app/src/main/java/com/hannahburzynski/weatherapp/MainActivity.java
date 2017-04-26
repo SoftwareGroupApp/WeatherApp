@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements
         //    onResume();
         }
 
+/////////////////////////////// o n O t h e r S t u f f //////////////////////////////////
     /**
      * stops the application by calling the super constructor and
      * disconnecting the Api Client
@@ -129,17 +130,6 @@ public class MainActivity extends AppCompatActivity implements
             mGoogleApiClient.disconnect();
         }
     }
-/////////////////////////////// o n R e s u m e ////////////////////////////////////////////
-
-   /* protected void onResume() {
-        super.onResume();
-    //    setContentView(R.layout.activity_main);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        intializeUI();
-        getWeather(query);
-    }
-*/
 
     /**
      * Shows the user which items were selected on from the menu.
@@ -171,16 +161,6 @@ public class MainActivity extends AppCompatActivity implements
         locTimeZone = localTimeZone();
         timeOffSetSelected = 0;
         getWeather(query);
-       // LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
-        //Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-/*
-        LocationRequest mLocationRequest = new LocationRequest();
-
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                .addLocationRequest(mLocationRequest);
-        Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (lastLocation != null) {
-        }*/
     }
 
     @Override
@@ -196,7 +176,6 @@ public class MainActivity extends AppCompatActivity implements
      */
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult){
-
         Toast.makeText(this, "Connect Failed", Toast.LENGTH_LONG).show();
     }
 
@@ -261,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements
      * @return a String that describes the time zone of the city
      */
     private String localTimeZone(){
-        //this gets the local time zone from the device but just ru
+        //this gets the local time zone from the device
         String timeZoneText =  TimeZone.getDefault() + "";
         int tzLeft = timeZoneText.indexOf("id=") + 4;
         int txRight = timeZoneText.indexOf(",mRawOffset") - 1;
