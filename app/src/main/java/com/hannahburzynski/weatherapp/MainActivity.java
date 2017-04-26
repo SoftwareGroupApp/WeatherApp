@@ -62,13 +62,12 @@ public class MainActivity extends AppCompatActivity implements
     private TextView dateTextView;
     private String query;
     public static String locTimeZone;
-    public double[] timeOffSets = {-2,5,-3,-7,-8,-1,-2,5,5,6,10,-8,-2,9,-4,-5.75,-2,0,0,2,-1,-10,
-            -3,-5.5,3.5,4,-1,-8,5,-1,5,-9,-8,-8,-3,-10,-8,-3.5 };
-    public double timeOffSetSelected;
+    public double[] timeOffSets = {0,7,0,8,12,13,6,7,0,0,-1,-5,13,7,-4,9,10.75,7,5,5,3,6,15,8,10.5,
+            1.5,1,6,13,0,6,0,14,13,13,8,15,13,8.5 };//offests adjusted from central time
+    public long timeOffSetSelected;
     protected Location mLastLocation;
     public double locLat = 0;
     public double locLong = 0;
-    protected GoogleApiClient getmGoogleApiClient;
 
 
 /////////////////////////////// o n C r e a t e ////////////////////////////////////////////
@@ -205,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements
             if(itemPos != 0) {
                 String city2Get = "q=" + parent.getSelectedItem();
                 int cityIndex = parent.getSelectedItemPosition();
-                timeOffSetSelected = timeOffSets[cityIndex];
+                timeOffSetSelected = ((long) timeOffSets[cityIndex]) * 3600L;
                 Toast.makeText(parent.getContext(), parent.getItemAtPosition(pos).toString(),
                         Toast.LENGTH_SHORT).show();
                 getWeather(city2Get);
@@ -396,12 +395,13 @@ public class MainActivity extends AppCompatActivity implements
         JSONObject main = forecast.getJSONObject("main");
         JSONObject coord = forecast.getJSONObject("coord");
         currentWeather.setHumidity(main.getDouble("humidity"));
-        currentWeather.setTime(forecast.getLong("dt"));
+        currentWeather.setTime(forecast.getLong("dt") + timeOffSetSelected);
         currentWeather.setPressure(main.getLong("pressure") *  0.0295299830714);
         currentWeather.setTemperature((main.getDouble("temp") * 9/5 - 459.67));
         currentWeather.setCity(forecast.getString("name"));
         currentWeather.setLat(coord.getDouble("lat"));
         currentWeather.setLon(coord.getDouble("lon"));
+        timeOffSetSelected = 0; //resets the offset
         return currentWeather;
     }
 }
